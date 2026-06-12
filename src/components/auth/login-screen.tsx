@@ -1,60 +1,64 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const LoginScreen = () => {
+const LoginForm = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      <div className="w-full max-w-md space-y-6 rounded-lg p-8 shadow-md">
-        <h1 className="text-center text-2xl font-bold text-gray-900">Login</h1>
+    <Card className="mx-auto w-full max-w-md">
+      <CardHeader>
+        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardDescription>
+          Enter your credentials to access your account
+        </CardDescription>
+      </CardHeader>
 
-        <form className="space-y-7">
-          <div>
-            <Label htmlFor="phone" className="">
-              Phone Number
-            </Label>
-            <div className="mt-2">
-              <Input
-                id="phone"
-                name="phone"
-                placeholder=""
-                autoFocus
-                autoComplete="off"
-                required
-                className="h-11 rounded-md sm:h-9"
-              />
-            </div>
+      <CardContent>
+        <form className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
+              id="phone"
+              name="phone"
+              placeholder="e.g. 01234567899"
+              autoFocus
+              autoComplete="off"
+              required
+              className="h-11 rounded-md sm:h-9"
+            />
           </div>
-          <div>
-            <Label htmlFor="password" className="">
-              Password
-            </Label>
-            <div className="mt-2">
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="off"
-                required
-                className="h-11 rounded-md sm:h-9"
-              />
-            </div>
+          <div className="grid gap-2">
+            <Label htmlFor="pin">Pin</Label>
+            <Input
+              id="pin"
+              name="pin"
+              type="text"
+              autoComplete="off"
+              required
+              className="h-11 rounded-md sm:h-9"
+            />
           </div>
-          <div>
-            <Button className="h-12 w-full">Login</Button>
-          </div>
+          <Button type="submit" className="mt-4 h-11 w-full">
+            Login
+          </Button>
         </form>
 
-        <footer className="flex items-center justify-between">
-          <h2>Don&apos;t have an account?</h2>
-          <Link href="/signup" className="underline">
-            Signup
+        <div className="mt-4 text-center">
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="ml-1 pl-1 underline">
+            Sign up
           </Link>
-        </footer>
-      </div>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
-export default LoginScreen;
+export default LoginForm;
