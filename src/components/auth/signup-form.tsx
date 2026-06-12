@@ -1,3 +1,4 @@
+import { SubmitEventHandler } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +10,20 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/use-auth";
 
 export function SignupForm() {
+  const { signup } = useAuth();
+
+  const handleSignup: SubmitEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    const name = e.target["full-name"].value;
+    const phoneNumber = e.target.phone.value;
+    const pin = e.target.pin.value;
+    console.log({ name, phoneNumber, pin });
+    // signup(name, phoneNumber, pin);
+  };
+
   return (
     <Card className="mx-auto w-full max-w-md">
       <CardHeader>
@@ -21,12 +34,13 @@ export function SignupForm() {
       </CardHeader>
 
       <CardContent>
-        <form className="grid gap-4">
+        <form className="grid gap-4" onSubmit={handleSignup}>
           <div className="grid gap-2">
             <Label htmlFor="full-name">Full Name</Label>
             <Input
               id="full-name"
               placeholder="e.g. Rahim Uddin"
+              autoComplete="off"
               required
               className="h-11 rounded-md sm:h-9"
             />
@@ -35,7 +49,7 @@ export function SignupForm() {
             <Label htmlFor="phone">Phone</Label>
             <Input
               id="phone"
-              type="phone"
+              autoComplete="off"
               placeholder="e.g. 01234567899"
               required
               className="h-11 rounded-md sm:h-9"
@@ -44,6 +58,7 @@ export function SignupForm() {
           <div className="grid gap-2">
             <Label htmlFor="pin">Pin</Label>
             <Input
+              autoComplete="off"
               id="pin"
               type="pin"
               className="h-11 rounded-md sm:h-9"
@@ -53,6 +68,7 @@ export function SignupForm() {
           <div className="grid gap-2">
             <Label htmlFor="confirm-pin">Confirm pin</Label>
             <Input
+              autoComplete="off"
               id="confirm-pin"
               type="pin"
               className="h-11 rounded-md sm:h-9"

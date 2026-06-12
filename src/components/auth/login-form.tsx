@@ -1,3 +1,6 @@
+"use client";
+
+import { SubmitEventHandler } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +12,15 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "@/hooks/use-auth";
 
 const LoginForm = () => {
+  const {} = useAuth();
+
+  const handleLogin: SubmitEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Card className="mx-auto w-full max-w-md">
       <CardHeader>
@@ -21,7 +31,7 @@ const LoginForm = () => {
       </CardHeader>
 
       <CardContent>
-        <form className="grid gap-4">
+        <form className="grid gap-4" onSubmit={handleLogin}>
           <div className="grid gap-2">
             <Label htmlFor="phone">Phone Number</Label>
             <Input
@@ -39,6 +49,7 @@ const LoginForm = () => {
             <Input
               id="pin"
               name="pin"
+              placeholder="Enter your pin"
               type="text"
               autoComplete="off"
               required
