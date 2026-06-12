@@ -1,5 +1,14 @@
+"use client";
+
+import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black"></div>
-  );
+  const router = useRouter();
+  const { user } = useAuth();
+  if (!user) {
+    router.push("/login");
+    return null;
+  }
+  return <div className=""></div>;
 }
