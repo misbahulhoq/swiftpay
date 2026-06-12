@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
+import { toast } from "sonner";
 
 type SignupFormData = {
   fullName: string;
@@ -30,13 +33,24 @@ export function SignupForm() {
     formState: { errors },
     setError,
     clearErrors,
+    reset,
   } = useForm<SignupFormData>();
-  const handleSignup: SubmitHandler<SignupFormData> = (data) => {
-    console.log(data);
-    // signup(name, phoneNumber, pin);
+  const handleSignup: SubmitHandler<SignupFormData> = async (data) => {
+    try {
+      signup(data.fullName, data.phoneNumber, data.pin);
+      toast.success("Account created successfully, please login", {
+        position: "top-center",
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error((error as Error).message, { position: "top-center" });
+    } finally {
+      reset();
+    }
   };
 
   const [isPhoneReadOnly, setIsPhoneReadOnly] = useState(true);
+  const [showPins, setShowPins] = useState(false);
   const phoneNumberValue = watch("phoneNumber");
   const phoneErrorType = errors.phoneNumber?.type;
 
@@ -143,60 +157,84 @@ export function SignupForm() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="pin">Pin</Label>
-            <Input
-              autoComplete="new-password"
-              id="pin"
-              type="password"
-              className="h-11 rounded-md sm:h-9"
-              placeholder="5 digit pin"
-              maxLength={5}
-              {...register("pin", {
-                required: "PIN is required.",
-                pattern: {
-                  value: /^[0-9]*$/,
-                  message: "Only numbers are allowed.",
-                },
-                minLength: {
-                  value: 5,
-                  message: "PIN must be 5 digits.",
-                },
-                maxLength: {
-                  value: 5,
-                  message: "PIN must be 5 digits.",
-                },
-              })}
-            />
+            <div className="relative">
+              <Input
+                autoComplete="new-password"
+                id="pin"
+                type={showPins ? "text" : "password"}
+                inputMode="numeric"
+                className="h-11 rounded-md pr-11 sm:h-9"
+                placeholder="5 digit pin"
+                maxLength={5}
+                {...register("pin", {
+                  required: "PIN is required.",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Only numbers are allowed.",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "PIN must be 5 digits.",
+                  },
+                  maxLength: {
+                    value: 5,
+                    message: "PIN must be 5 digits.",
+                  },
+                })}
+              />
+              <button
+                type="button"
+                aria-label={showPins ? "Hide PINs" : "Show PINs"}
+                aria-pressed={showPins}
+                className="absolute top-1/2 right-1 size-9 -translate-y-1/2 rounded-md sm:size-7"
+                onClick={() => setShowPins((value) => !value)}
+              >
+                {!showPins ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+              </button>
+            </div>
             {errors.pin && (
               <p className="text-sm text-red-500">{errors.pin.message}</p>
             )}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="confirm-pin">Confirm pin</Label>
-            <Input
-              autoComplete="new-password"
-              id="confirm-pin"
-              type="password"
-              className="h-11 rounded-md sm:h-9"
-              placeholder="Retype 5 digit pin"
-              maxLength={5}
-              {...register("confirmPin", {
-                required: "Please confirm your PIN.",
-                pattern: {
-                  value: /^[0-9]*$/,
-                  message: "Only numbers are allowed.",
-                },
-                minLength: {
-                  value: 5,
-                  message: "Confirm PIN must be 5 digits.",
-                },
-                maxLength: {
-                  value: 5,
-                  message: "Confirm PIN must be 5 digits.",
-                },
-                validate: (value) =>
-                  value === watch("pin") || "The PINs do not match.",
-              })}
-            />
+            <div className="relative">
+              <Input
+                autoComplete="new-password"
+                id="confirm-pin"
+                type={showPins ? "text" : "password"}
+                inputMode="numeric"
+                className="h-11 rounded-md pr-11 sm:h-9"
+                placeholder="Retype 5 digit pin"
+                maxLength={5}
+                {...register("confirmPin", {
+                  required: "Please confirm your PIN.",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Only numbers are allowed.",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "Confirm PIN must be 5 digits.",
+                  },
+                  maxLength: {
+                    value: 5,
+                    message: "Confirm PIN must be 5 digits.",
+                  },
+                  validate: (value) =>
+                    value === watch("pin") || "The PINs do not match.",
+                })}
+              />
+              <button
+                type="button"
+                aria-label={showPins ? "Hide PINs" : "Show PINs"}
+                aria-pressed={showPins}
+                className="absolute top-1/2 right-1 size-9 -translate-y-1/2 rounded-md sm:size-7"
+                onClick={() => setShowPins((value) => !value)}
+              >
+                {!showPins ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+              </button>
+            </div>
             {errors.confirmPin && (
               <p className="text-sm text-red-500">
                 {errors.confirmPin.message}
