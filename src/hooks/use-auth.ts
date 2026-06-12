@@ -11,11 +11,14 @@ function signup(name: string, phoneNumber: string, password: string) {
 function login(phoneNumber: string, password: string) {
   const users = JSON.parse(localStorage.getItem("users") || "{}");
   const user = users[phoneNumber];
+  if (!user) {
+    throw new Error("Invalid credentials");
+  }
   const isValid = user["password"] === password;
   if (!isValid) {
     throw new Error("Invalid credentials");
   }
-  sessionStorage.setItem("user", user);
+  sessionStorage.setItem("user", JSON.stringify(user));
 }
 
 function logout() {
