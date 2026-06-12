@@ -1,14 +1,25 @@
 "use client";
 
-import { useAuth } from "@/hooks/use-auth";
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/use-auth";
 
-export default function Home() {
+function Home() {
   const router = useRouter();
   const { user } = useAuth();
-  if (!user) {
-    router.push("/login");
-    return null;
-  }
-  return <div className=""></div>;
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    } else {
+      router.push("/home");
+    }
+  }, [router, user]);
+
+  return null;
 }
+
+export default dynamic(() => Promise.resolve(Home), {
+  ssr: false,
+});

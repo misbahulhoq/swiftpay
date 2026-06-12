@@ -46,7 +46,7 @@ const LoginScreen = () => {
         </form>
 
         <footer className="flex items-center justify-between">
-          <h2>Already have an account?</h2>
+          <h2>Don&apos;t have an account?</h2>
           <Link href="/signup" className="underline">
             Signup
           </Link>
