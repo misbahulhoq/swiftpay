@@ -19,9 +19,10 @@ const LoginScreen = () => {
                 id="phone"
                 name="phone"
                 placeholder=""
+                autoFocus
                 autoComplete="off"
                 required
-                className="rounded-md"
+                className="h-11 rounded-md sm:h-9"
               />
             </div>
           </div>
@@ -36,12 +37,12 @@ const LoginScreen = () => {
                 type="password"
                 autoComplete="off"
                 required
-                className="rounded-md"
+                className="h-11 rounded-md sm:h-9"
               />
             </div>
           </div>
           <div>
-            <Button className="h-10 w-full">Login</Button>
+            <Button className="h-12 w-full">Login</Button>
           </div>
         </form>
 
