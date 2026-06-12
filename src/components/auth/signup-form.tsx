@@ -1,4 +1,4 @@
-import { SubmitEventHandler } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -27,11 +27,34 @@ export function SignupForm() {
     handleSubmit,
     watch,
     formState: { errors },
+    setError,
+    clearErrors,
   } = useForm<SignupFormData>();
   const handleSignup: SubmitHandler<SignupFormData> = (data) => {
     console.log(data);
     // signup(name, phoneNumber, pin);
   };
+
+  const [isPhoneReadOnly, setIsPhoneReadOnly] = useState(true);
+  const phoneNumberValue = watch("phoneNumber");
+  const phoneErrorType = errors.phoneNumber?.type;
+
+  useEffect(() => {
+    if (
+      phoneNumberValue &&
+      phoneNumberValue.length > 0 &&
+      !phoneNumberValue.startsWith("0")
+    ) {
+      setError("phoneNumber", {
+        type: "manual",
+        message: "Phone number must start with 0.",
+      });
+    } else {
+      if (phoneErrorType === "manual") {
+        clearErrors("phoneNumber");
+      }
+    }
+  }, [phoneNumberValue, setError, clearErrors, phoneErrorType]);
 
   return (
     <Card className="mx-auto w-full max-w-md">
@@ -49,7 +72,7 @@ export function SignupForm() {
             <Input
               id="full-name"
               placeholder="e.g. Rahim Uddin"
-              autoComplete="off"
+              autoComplete="none"
               required
               className="h-11 rounded-md sm:h-9"
               {...register("fullName")}
@@ -59,18 +82,19 @@ export function SignupForm() {
             <Label htmlFor="phone">Phone</Label>
             <Input
               id="phone"
-              autoComplete="off"
+              type="tel"
+              autoComplete="none"
               placeholder="e.g. 01234567899"
               className="h-11 rounded-md sm:h-9"
               maxLength={11}
+              readOnly={isPhoneReadOnly}
+              onFocus={() => setIsPhoneReadOnly(false)}
               {...register("phoneNumber", {
                 required: "Phone number is required.",
                 pattern: {
                   value: /^[0-9]*$/,
                   message: "Only numbers are allowed.",
                 },
-                validate: (value) =>
-                  value.startsWith("0") || "Phone number must start with 0.",
                 minLength: {
                   value: 11,
                   message: "Phone number must be 11 digits.",
@@ -90,7 +114,7 @@ export function SignupForm() {
           <div className="grid gap-2">
             <Label htmlFor="pin">Pin</Label>
             <Input
-              autoComplete="off"
+              autoComplete="none"
               id="pin"
               type="password"
               className="h-11 rounded-md sm:h-9"
@@ -119,7 +143,7 @@ export function SignupForm() {
           <div className="grid gap-2">
             <Label htmlFor="confirm-pin">Confirm pin</Label>
             <Input
-              autoComplete="off"
+              autoComplete="none"
               id="confirm-pin"
               type="password"
               className="h-11 rounded-md sm:h-9"
