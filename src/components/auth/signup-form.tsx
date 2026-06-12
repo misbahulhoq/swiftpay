@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,6 +24,7 @@ export function SignupForm() {
   const { signup } = useAuth();
   const {
     register,
+    control,
     handleSubmit,
     watch,
     formState: { errors },
@@ -66,30 +67,41 @@ export function SignupForm() {
       </CardHeader>
 
       <CardContent>
-        <form className="grid gap-4" onSubmit={handleSubmit(handleSignup)}>
+        <form
+          className="grid gap-4"
+          autoComplete="off"
+          onSubmit={handleSubmit(handleSignup)}
+        >
           <div className="grid gap-2">
-            <Label htmlFor="full-name">Full Name</Label>
-            <Input
-              id="full-name"
-              placeholder="e.g. Rahim Uddin"
-              autoComplete="none"
-              required
-              className="h-11 rounded-md sm:h-9"
-              {...register("fullName")}
+            <Label htmlFor="signup-entry-alpha">Full Name</Label>
+            <Controller
+              name="fullName"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Input
+                  id="signup-entry-alpha"
+                  name="signup-entry-alpha"
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  ref={field.ref}
+                  placeholder="e.g. Rahim Uddin"
+                  autoComplete="section-signup-alpha new-password"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  required
+                  className="h-11 rounded-md sm:h-9"
+                />
+              )}
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="phone">Phone</Label>
-            <Input
-              id="phone"
-              type="tel"
-              autoComplete="none"
-              placeholder="e.g. 01234567899"
-              className="h-11 rounded-md sm:h-9"
-              maxLength={11}
-              readOnly={isPhoneReadOnly}
-              onFocus={() => setIsPhoneReadOnly(false)}
-              {...register("phoneNumber", {
+            <Label htmlFor="signup-entry-beta">Phone</Label>
+            <Controller
+              name="phoneNumber"
+              control={control}
+              rules={{
                 required: "Phone number is required.",
                 pattern: {
                   value: /^[0-9]*$/,
@@ -103,7 +115,25 @@ export function SignupForm() {
                   value: 11,
                   message: "Phone number must not exceed 11 digits.",
                 },
-              })}
+              }}
+              render={({ field }) => (
+                <Input
+                  id="signup-entry-beta"
+                  name="signup-entry-beta"
+                  type="tel"
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  ref={field.ref}
+                  autoComplete="section-signup-beta new-password"
+                  inputMode="numeric"
+                  placeholder="e.g. 01234567899"
+                  className="h-11 rounded-md sm:h-9"
+                  maxLength={11}
+                  readOnly={isPhoneReadOnly}
+                  onFocus={() => setIsPhoneReadOnly(false)}
+                />
+              )}
             />
             {errors.phoneNumber && (
               <p className="text-sm text-red-500">
@@ -114,7 +144,7 @@ export function SignupForm() {
           <div className="grid gap-2">
             <Label htmlFor="pin">Pin</Label>
             <Input
-              autoComplete="none"
+              autoComplete="new-password"
               id="pin"
               type="password"
               className="h-11 rounded-md sm:h-9"
@@ -143,7 +173,7 @@ export function SignupForm() {
           <div className="grid gap-2">
             <Label htmlFor="confirm-pin">Confirm pin</Label>
             <Input
-              autoComplete="none"
+              autoComplete="new-password"
               id="confirm-pin"
               type="password"
               className="h-11 rounded-md sm:h-9"
