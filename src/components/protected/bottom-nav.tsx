@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Home,
   Clock3,
@@ -6,7 +7,6 @@ import {
   MessageSquareText,
   UserRound,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
 
 const bottomNav = [
   { label: "Home", href: "/home", icon: Home },
@@ -18,8 +18,14 @@ const bottomNav = [
 
 const BottomNav = () => {
   const pathName = usePathname();
+  const showBottomNav = bottomNav.some((item) => item.href === pathName);
+
+  if (!showBottomNav) {
+    return null;
+  }
+
   return (
-    <nav className="bg-card ring-foreground/10 fixed bottom-2 left-1/2 grid w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 grid-cols-5 rounded-3xl p-2 shadow-lg ring-1">
+    <nav className="bg-card ring-foreground/10 fixed bottom-1 left-1/2 grid w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 grid-cols-5 rounded-3xl p-2 shadow-lg ring-1">
       {bottomNav.map((item) => {
         const Icon = item.icon;
         const active = item.href === pathName;

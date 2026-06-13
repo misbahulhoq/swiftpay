@@ -1,9 +1,10 @@
+import Header from "@/components/protected/header";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <header>Header goes here.</header>
+      <Header />
       {children}
     </div>
   );
