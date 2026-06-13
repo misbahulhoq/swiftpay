@@ -16,6 +16,7 @@ const Header = () => {
             router.back();
           }}
           className="p-2"
+          title="Back"
         >
           <ArrowLeft />
         </button>
