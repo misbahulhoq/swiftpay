@@ -7,7 +7,6 @@ export const generateStaticParams = () => {
     { slug: "send-money" },
     { slug: "mobile-recharge" },
     { slug: "bill-pay" },
-    { slug: "" },
   ];
 };
 

@@ -1,23 +1,29 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 
-import { useAuth } from "@/hooks/use-auth";
+type ProtectedLayoutProps = {
+  children: React.ReactNode;
+  params: Promise<Record<string, never>>;
+};
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
+const Layout = ({ children }: ProtectedLayoutProps) => {
+  const [user, setUser] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    const currentUser = sessionStorage.getItem("user");
+
     // eslint-disable-next-line react-hooks/set-state-in-effect
+    setUser(currentUser);
     setMounted(true);
-    if (!user) {
-      router.push("/login");
+
+    if (!currentUser) {
+      router.replace("/login");
     }
-  }, [router, user]);
+  }, [router]);
 
   if (!mounted || !user) {
     return null;
@@ -26,6 +32,4 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return <div>{children}</div>;
 };
 
-export default dynamic(() => Promise.resolve(Layout), {
-  ssr: false,
-});
+export default Layout;
