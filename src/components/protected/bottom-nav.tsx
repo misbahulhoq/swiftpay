@@ -1,18 +1,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Home,
-  Clock3,
-  QrCode,
-  MessageSquareText,
-  UserRound,
-} from "lucide-react";
+import { Home, Clock3, QrCode, UserRound } from "lucide-react";
 
 const bottomNav = [
   { label: "Home", href: "/home", icon: Home },
   { label: "History", href: "/transactions", icon: Clock3 },
   { label: "Scan", href: "/scan", icon: QrCode },
-  { label: "Inbox", href: "/inbox", icon: MessageSquareText },
   { label: "Profile", href: "/profile", icon: UserRound },
 ];
 
@@ -25,7 +18,7 @@ const BottomNav = () => {
   }
 
   return (
-    <nav className="bg-card ring-foreground/10 fixed bottom-1 left-1/2 grid w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 grid-cols-5 rounded-3xl p-2 shadow-lg ring-1">
+    <nav className="bg-card ring-foreground/10 fixed bottom-1 left-1/2 grid w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 grid-cols-4 rounded-3xl p-2 shadow-lg ring-1">
       {bottomNav.map((item) => {
         const Icon = item.icon;
         const active = item.href === pathName;

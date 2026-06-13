@@ -5,7 +5,6 @@ export const paths = [
   { slug: "bkash-to-bank" },
   { slug: "cash-out" },
   { slug: "electricity-bill" },
-  { slug: "inbox" },
   { slug: "limits-charges" },
   { slug: "merchant-pay" },
   { slug: "mobile-recharge" },
@@ -21,7 +20,7 @@ export const paths = [
   { slug: "statements" },
   { slug: "support" },
   { slug: "transactions" },
-];
+] as const;
 
 export const generateStaticParams = () => {
   return paths;
