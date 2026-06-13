@@ -1,27 +1,38 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { Search, XIcon } from "lucide-react";
+
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { bankList } from "@/lib/bank-list";
-import { Search, XIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useTransactions } from "@/hooks/use-transactions";
+
+interface IForm {
+  accountNumber: string;
+  amount: number;
+}
 
 const BankToBkash = () => {
+  const { balanceIn } = useTransactions();
   const [search, setSearch] = useState("");
   const [selectedBank, setSelectedBank] = useState<(typeof bankList)[0] | null>(
     null,
   );
-  const [amount, setAmount] = useState(0);
-  const [accountNumber, setAccountNumber] = useState("");
-  const [errorMessage, setErrorMessage] = useState({
-    accountNumber: "",
-    amount: "",
-  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<IForm>();
 
   const getHighlightedText = (text: string, highlight: string) => {
     const parts = text.split(new RegExp(`(${highlight})`, "gi"));
@@ -41,20 +52,17 @@ const BankToBkash = () => {
     );
   };
 
-  const handleBalanceAdd = () => {
-    if (!amount) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        amount: "Amount is required",
-      }));
+  const handleBalanceAdd = async (data: IForm) => {
+    try {
+      balanceIn("bank-to-bkash", data.amount);
+      toast.success("Balance added successfully", { position: "top-center" });
+    } catch (_err) {
+      toast.error((_err as Error).message || "Something went wrong", {
+        position: "top-center",
+      });
+    } finally {
+      reset();
     }
-    if (!accountNumber) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        accountNumber: "Account number is required",
-      }));
-    }
-    if (!amount || !accountNumber) return;
   };
 
   if (selectedBank) {
@@ -64,16 +72,22 @@ const BankToBkash = () => {
           Enter {selectedBank.name} ({selectedBank.shortName}) account number
           and amount
         </h2>
-        <section className="flex flex-col gap-3">
+        <form
+          onSubmit={handleSubmit(handleBalanceAdd)}
+          className="flex flex-col gap-3"
+        >
           <div>
             <Input
+              autoComplete="off"
               placeholder="Account number"
               className="h-11"
-              onChange={(e) => setAccountNumber(e.target.value)}
+              {...register("accountNumber", {
+                required: "Account number is required",
+              })}
             />
-            {errorMessage.accountNumber && (
+            {errors.accountNumber && (
               <span className="text-destructive text-xs">
-                {errorMessage.accountNumber}
+                {errors.accountNumber.message}
               </span>
             )}
           </div>
@@ -84,24 +98,26 @@ const BankToBkash = () => {
               type="number"
               className="h-11"
               min={10}
-              onChange={(e) => {
-                setAmount(Number(e.target.value));
-              }}
+              {...register("amount", {
+                required: "Amount is required",
+                valueAsNumber: true,
+                min: {
+                  value: 100,
+                  message: "Minimum amount is ৳100",
+                },
+              })}
             />
-            {errorMessage.amount && (
+            {errors.amount && (
               <span className="text-destructive text-xs">
-                {errorMessage.amount}
+                {errors.amount.message}
               </span>
             )}
           </div>
 
-          <Button
-            className="h-11 w-25 self-end rounded-full"
-            onClick={handleBalanceAdd}
-          >
+          <Button type="submit" className="h-11 w-25 self-end rounded-full">
             Add
           </Button>
-        </section>
+        </form>
       </div>
     );
   }
