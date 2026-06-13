@@ -9,14 +9,11 @@ import {
   Bell,
   Building2,
   CircleDollarSign,
-  Clock3,
   CreditCard,
   Headphones,
-  Home,
   Landmark,
   Lightbulb,
   MapPin,
-  MessageSquareText,
   MoreHorizontal,
   Phone,
   QrCode,
@@ -84,14 +81,6 @@ const activity = [
     amount: "- Tk 299",
     icon: Phone,
   },
-];
-
-const bottomNav = [
-  { label: "Home", href: "/home", icon: Home },
-  { label: "History", href: "/transactions", icon: Clock3 },
-  { label: "Scan", href: "/scan", icon: QrCode },
-  { label: "Inbox", href: "/inbox", icon: MessageSquareText },
-  { label: "Profile", href: "/profile", icon: UserRound },
 ];
 
 function getStoredUser(): StoredUser | null {
@@ -339,28 +328,6 @@ const HomePage = () => {
           </CardFooter>
         </Card>
       </div>
-
-      <nav className="bg-card ring-foreground/10 fixed bottom-2 left-1/2 grid w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 grid-cols-5 rounded-3xl p-2 shadow-lg ring-1">
-        {bottomNav.map((item) => {
-          const Icon = item.icon;
-          const active = item.label === "Home";
-
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`flex min-h-14 flex-col items-center justify-center gap-1 rounded-2xl text-[11px] font-medium transition-colors ${
-                active
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              <Icon />
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
     </main>
   );
 };

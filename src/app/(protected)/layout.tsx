@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import BottomNav from "@/components/protected/bottom-nav";
 
 type ProtectedLayoutProps = {
   children: React.ReactNode;
@@ -29,7 +30,12 @@ const Layout = ({ children }: ProtectedLayoutProps) => {
     return null;
   }
 
-  return <div>{children}</div>;
+  return (
+    <div>
+      {children}
+      <BottomNav />
+    </div>
+  );
 };
 
 export default Layout;
