@@ -10,7 +10,7 @@ const Header = () => {
   const title = pathName.split("-").join(" ").replaceAll("/", "");
 
   return (
-    <header className="bg-primary text-primary-foreground sticky top-0 z-50 px-5 py-2">
+    <header className="bg-primary text-primary-foreground sticky top-0 z-50 px-4 py-2">
       <div className="flex w-full items-center justify-between gap-5">
         <button
           onClick={() => {
