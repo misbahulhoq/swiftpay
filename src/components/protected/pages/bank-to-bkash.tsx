@@ -5,11 +5,9 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-  InputGroupText,
 } from "@/components/ui/input-group";
 import { bankList } from "@/lib/bank-list";
-import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Cross, Search, XIcon } from "lucide-react";
 
 const BankToBkash = () => {
   const [search, setSearch] = useState("");
@@ -19,27 +17,45 @@ const BankToBkash = () => {
     <div>
       <section>
         <InputGroup className="">
-          <InputGroupInput placeholder="Search..." className="" />
+          <InputGroupInput
+            placeholder="Search..."
+            className=""
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <InputGroupAddon>
             <Search />
           </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            <Button>Search</Button>
-          </InputGroupAddon>
+          {search.length > 0 && (
+            <InputGroupAddon align="inline-end">
+              <button onClick={() => setSearch("")} className="pr-1">
+                <XIcon size={18} />
+              </button>
+            </InputGroupAddon>
+          )}
         </InputGroup>
       </section>
 
       <section className="mt-3">
-        {bankList.map((bank, index) => {
-          const { shortName, name } = bank;
-          return (
-            <button key={index} className="my-1.5 block cursor-pointer py-2.5">
-              <p className="text-muted-foreground">
-                {name} ({shortName})
-              </p>
-            </button>
-          );
-        })}
+        {bankList
+          .filter(
+            (bank) =>
+              bank.name.toLowerCase().includes(search.toLowerCase()) ||
+              bank.shortName.toLowerCase().includes(search.toLowerCase()),
+          )
+          .map((bank, index) => {
+            const { shortName, name } = bank;
+            return (
+              <button
+                key={index}
+                className="my-1.5 block cursor-pointer py-2.5"
+              >
+                <p className="text-muted-foreground">
+                  {name} ({shortName})
+                </p>
+              </button>
+            );
+          })}
       </section>
     </div>
   );
