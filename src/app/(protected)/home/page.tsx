@@ -122,7 +122,7 @@ const HomePage = () => {
   };
 
   return (
-    <main className="bg-background min-h-screen pt-4 pb-5">
+    <main className="bg-background min-h-screen px-4 pt-4 pb-5">
       <div className="flex flex-col gap-5 pb-24">
         <header className="flex items-center justify-between">
           <div className="flex min-w-0 items-center gap-3">
@@ -180,7 +180,7 @@ const HomePage = () => {
                 Add Money
               </Link>
             </Button>
-            <Button asChild variant="outline" className="flex-1">
+            <Button asChild variant="secondary" className="flex-1">
               <Link href="/statements">
                 <ReceiptText data-icon="inline-start" />
                 Statement

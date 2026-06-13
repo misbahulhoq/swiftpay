@@ -8,7 +8,7 @@ const SignupForm = dynamic(() => Promise.resolve(Signup), {
 
 const Page = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center px-4">
       <SignupForm />
     </div>
   );

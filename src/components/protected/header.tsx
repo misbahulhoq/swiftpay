@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 const Header = () => {
@@ -10,7 +11,7 @@ const Header = () => {
 
   return (
     <header className="bg-primary text-primary-foreground sticky top-0 z-50 px-5 py-2">
-      <div className="flex w-full items-center gap-5">
+      <div className="flex w-full items-center justify-between gap-5">
         <button
           onClick={() => {
             router.back();
@@ -21,7 +22,15 @@ const Header = () => {
           <ArrowLeft />
         </button>
 
-        <h3 className="justify-self-center text-center capitalize">{title}</h3>
+        <h3 className="capitalize">{title}</h3>
+
+        <Image
+          src="/bkash.webp"
+          alt="Bkash Logo"
+          width={24}
+          height={24}
+          className="rounded"
+        />
       </div>
     </header>
   );

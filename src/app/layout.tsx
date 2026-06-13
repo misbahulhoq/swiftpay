@@ -38,7 +38,7 @@ export default function RootLayout({
         inter.variable,
       )}
     >
-      <body className="mx-auto flex min-h-full max-w-xl flex-col px-5">
+      <body className="mx-auto flex min-h-full max-w-xl flex-col">
         {children}
         <Toaster />
       </body>
