@@ -42,6 +42,10 @@ const LoginForm = () => {
   const phoneErrorType = errors.phoneNumber?.type;
 
   const handleLogin: SubmitHandler<LoginFormData> = async (data) => {
+    const balanceExists = localStorage.getItem("swiftpay_balance");
+    if (!balanceExists) {
+      localStorage.setItem("swiftpay_balance", "0");
+    }
     try {
       const { phoneNumber, pin } = data;
       login(phoneNumber, pin);

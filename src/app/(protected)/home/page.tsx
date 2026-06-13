@@ -38,6 +38,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useBalance } from "@/hooks/use-balance";
 
 type StoredUser = {
   name?: string;
@@ -96,6 +97,7 @@ function getStoredUser(): StoredUser | null {
 }
 
 const HomePage = () => {
+  const balance = useBalance();
   const user = useMemo(() => getStoredUser(), []);
   const firstName = user?.name?.split(" ")[0] || "there";
   const [isBalanceVisible, setIsBalanceVisible] = useState(false);
@@ -150,7 +152,7 @@ const HomePage = () => {
               aria-live="polite"
               className="min-h-9 text-3xl font-semibold tracking-normal tabular-nums"
             >
-              {isBalanceVisible ? "Tk 28,450.75" : "Tk ••••••"}
+              Tk {isBalanceVisible ? balance : " ••••••"}
             </CardTitle>
             <CardAction>
               <Button variant="secondary" size="sm" onClick={revealBalance}>

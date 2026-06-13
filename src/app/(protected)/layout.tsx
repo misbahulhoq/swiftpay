@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
 import BottomNav from "@/components/protected/bottom-nav";
 
 type ProtectedLayoutProps = {
@@ -15,7 +16,7 @@ const Layout = ({ children }: ProtectedLayoutProps) => {
   const router = useRouter();
 
   useEffect(() => {
-    const currentUser = sessionStorage.getItem("user");
+    const currentUser = sessionStorage.getItem("swiftpay_user");
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setUser(currentUser);
