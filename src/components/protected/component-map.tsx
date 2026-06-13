@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import { paths } from "@/app/(protected)/[slug]/page";
+import { Slug } from "@/app/(protected)/[slug]/page";
 
 import AddMoney from "./pages/add-money";
 import BankToBkash from "./pages/bank-to-bkash";
@@ -21,8 +21,6 @@ import Security from "./pages/security";
 import Services from "./pages/services";
 import Statements from "./pages/statements";
 import Support from "./pages/support";
-
-type Slug = (typeof paths)[number]["slug"];
 
 export const componentMap: Record<Slug, JSX.Element> = {
   "add-money": <AddMoney />,

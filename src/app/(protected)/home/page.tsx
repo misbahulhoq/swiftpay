@@ -175,20 +175,6 @@ const HomePage = () => {
               <CreditCard className="shrink-0" />
             </div>
           </CardContent>
-          <CardFooter className="gap-2">
-            <Button asChild variant="secondary" className="flex-1">
-              <Link href="/add-money">
-                <CircleDollarSign data-icon="inline-start" />
-                Add Money
-              </Link>
-            </Button>
-            <Button asChild variant="secondary" className="flex-1">
-              <Link href="/statements">
-                <ReceiptText data-icon="inline-start" />
-                Statement
-              </Link>
-            </Button>
-          </CardFooter>
         </Card>
 
         <section className="flex flex-col gap-3">

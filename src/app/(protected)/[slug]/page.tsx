@@ -1,3 +1,5 @@
+import { componentMap } from "@/components/protected/component-map";
+
 export const paths = [
   { slug: "add-money" },
   { slug: "bank-to-bkash" },
@@ -26,10 +28,12 @@ export const generateStaticParams = () => {
   return paths;
 };
 
-const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+export type Slug = (typeof paths)[number]["slug"];
+
+const Page = async ({ params }: { params: Promise<{ slug: Slug }> }) => {
   const { slug } = await params;
-  console.log(slug);
-  return <div>Page</div>;
+
+  return componentMap[slug];
 };
 
 export default Page;
