@@ -21,6 +21,7 @@ import Security from "./pages/security";
 import Services from "./pages/services";
 import Statements from "./pages/statements";
 import Support from "./pages/support";
+import CardToBkash from "./pages/card-to-bkash";
 
 export const componentMap: Record<Slug, JSX.Element> = {
   "add-money": <AddMoney />,
@@ -28,6 +29,7 @@ export const componentMap: Record<Slug, JSX.Element> = {
   "bill-pay": <BillPay />,
   "bkash-to-bank": <BkashToBank />,
   "cash-out": <CashOut />,
+  "card-to-bkash": <CardToBkash />,
   "electricity-bill": <ElectricityBill />,
   "limits-charges": <LimitCharges />,
   "merchant-pay": <MerchantPay />,

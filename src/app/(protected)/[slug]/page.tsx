@@ -3,6 +3,7 @@ import { componentMap } from "@/components/protected/component-map";
 export const paths = [
   { slug: "add-money" },
   { slug: "bank-to-bkash" },
+  { slug: "card-to-bkash" },
   { slug: "bill-pay" },
   { slug: "bkash-to-bank" },
   { slug: "cash-out" },
@@ -33,7 +34,7 @@ export type Slug = (typeof paths)[number]["slug"];
 const Page = async ({ params }: { params: Promise<{ slug: Slug }> }) => {
   const { slug } = await params;
 
-  return componentMap[slug];
+  return <div className="px-4 pt-5 pb-8">{componentMap[slug]}</div>;
 };
 
 export default Page;
