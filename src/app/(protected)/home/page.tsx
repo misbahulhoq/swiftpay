@@ -29,7 +29,7 @@ import {
   UserRound,
   WalletCards,
 } from "lucide-react";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -109,6 +109,28 @@ function getStoredUser(): StoredUser | null {
 const HomePage = () => {
   const user = useMemo(() => getStoredUser(), []);
   const firstName = user?.name?.split(" ")[0] || "there";
+  const [isBalanceVisible, setIsBalanceVisible] = useState(false);
+  const balanceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (balanceTimerRef.current) {
+        clearTimeout(balanceTimerRef.current);
+      }
+    };
+  }, []);
+
+  const revealBalance = () => {
+    if (balanceTimerRef.current) {
+      clearTimeout(balanceTimerRef.current);
+    }
+
+    setIsBalanceVisible(true);
+    balanceTimerRef.current = setTimeout(() => {
+      setIsBalanceVisible(false);
+      balanceTimerRef.current = null;
+    }, 4000);
+  };
 
   return (
     <main className="bg-background min-h-screen pt-4 pb-5">
@@ -135,13 +157,16 @@ const HomePage = () => {
             <CardDescription className="text-primary-foreground/70">
               Available balance
             </CardDescription>
-            <CardTitle className="text-3xl font-semibold tracking-normal">
-              Tk 28,450.75
+            <CardTitle
+              aria-live="polite"
+              className="min-h-9 text-3xl font-semibold tracking-normal tabular-nums"
+            >
+              {isBalanceVisible ? "Tk 28,450.75" : "Tk ••••••"}
             </CardTitle>
             <CardAction>
-              <Button variant="secondary" size="sm">
+              <Button variant="secondary" size="sm" onClick={revealBalance}>
                 <Sparkles data-icon="inline-start" />
-                Tap to view
+                {isBalanceVisible ? "Viewing" : "Tap to view"}
               </Button>
             </CardAction>
           </CardHeader>
@@ -315,7 +340,7 @@ const HomePage = () => {
         </Card>
       </div>
 
-      <nav className="bg-card ring-foreground/10 fixed bottom-3 left-1/2 grid w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 grid-cols-5 rounded-3xl p-2 shadow-lg ring-1">
+      <nav className="bg-card ring-foreground/10 fixed bottom-2 left-1/2 grid w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 grid-cols-5 rounded-3xl p-2 shadow-lg ring-1">
         {bottomNav.map((item) => {
           const Icon = item.icon;
           const active = item.label === "Home";
