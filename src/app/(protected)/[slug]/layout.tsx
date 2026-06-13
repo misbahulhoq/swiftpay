@@ -1,5 +1,5 @@
-import Header from "@/components/protected/header";
 import React from "react";
+import Header from "@/components/protected/header";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (

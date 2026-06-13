@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 const Header = () => {
@@ -16,7 +16,7 @@ const Header = () => {
           onClick={() => {
             router.back();
           }}
-          className="p-2"
+          className="py-1 pr-2"
           title="Back"
         >
           <ArrowLeft />
