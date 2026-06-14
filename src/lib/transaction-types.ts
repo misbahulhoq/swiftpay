@@ -9,7 +9,15 @@ export const BalanceOutValues = [
   "merchant-pay",
   "recharge",
 ] as const;
+
 export type BalanceOut = (typeof BalanceOutValues)[number];
+
+export const isBalanceIn = (value: string): value is BalanceIn => {
+  return (BalanceInValues as readonly string[]).includes(value);
+};
+export const isBalanceOut = (value: string): value is BalanceOut => {
+  return (BalanceOutValues as readonly string[]).includes(value);
+};
 
 export type TransactionType = BalanceIn | BalanceOut | "request";
 

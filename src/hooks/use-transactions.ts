@@ -1,4 +1,15 @@
 import { BalanceIn, BalanceOut } from "@/lib/transaction-types";
+type Transaction = {
+  type: string;
+  amount: number;
+  transactionTime: string;
+};
+
+const getTransactionHistory = () => {
+  return JSON.parse(
+    localStorage.getItem("swiftpay_transactions") || "[]",
+  ) as Transaction[];
+};
 
 const updateTransactionHistory = (
   type: BalanceIn | BalanceOut,
@@ -7,7 +18,16 @@ const updateTransactionHistory = (
   const transactionHistory = JSON.parse(
     localStorage.getItem("swiftpay_transactions") || "[]",
   );
-  transactionHistory.push({ type, amount });
+  const now = new Date();
+  const transactionTime = now.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+  transactionHistory.push({ type, amount, transactionTime });
   localStorage.setItem(
     "swiftpay_transactions",
     JSON.stringify(transactionHistory),
@@ -36,5 +56,5 @@ const balanceOut = (type: BalanceOut, amount: number) => {
 };
 
 export function useTransactions() {
-  return { balanceIn, balanceOut };
+  return { balanceIn, balanceOut, getTransactionHistory };
 }

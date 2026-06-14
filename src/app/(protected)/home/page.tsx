@@ -15,7 +15,6 @@ import {
   Lightbulb,
   MapPin,
   MoreHorizontal,
-  Phone,
   QrCode,
   ReceiptText,
   ScanLine,
@@ -39,6 +38,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useBalance } from "@/hooks/use-balance";
+import { useTransactions } from "@/hooks/use-transactions";
+import { isBalanceIn } from "@/lib/transaction-types";
 
 type StoredUser = {
   name?: string;
@@ -63,27 +64,6 @@ const serviceLinks = [
   { label: "Support", href: "/support", icon: Headphones },
 ];
 
-const activity = [
-  {
-    title: "Sent to Rafi Ahmed",
-    meta: "Today, 10:42 AM",
-    amount: "- Tk 1,250",
-    icon: ArrowUpRight,
-  },
-  {
-    title: "Cash in from agent",
-    meta: "Yesterday, 7:18 PM",
-    amount: "+ Tk 5,000",
-    icon: ArrowDownLeft,
-  },
-  {
-    title: "Mobile recharge",
-    meta: "Jun 11, 9:02 PM",
-    amount: "- Tk 299",
-    icon: Phone,
-  },
-];
-
 function getStoredUser(): StoredUser | null {
   if (typeof window === "undefined") {
     return null;
@@ -98,6 +78,7 @@ function getStoredUser(): StoredUser | null {
 
 const HomePage = () => {
   const balance = useBalance();
+  const { getTransactionHistory } = useTransactions();
   const user = useMemo(() => getStoredUser(), []);
   const firstName = user?.name?.split(" ")[0] || "there";
   const [isBalanceVisible, setIsBalanceVisible] = useState(false);
@@ -235,34 +216,36 @@ const HomePage = () => {
             </CardAction>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            {activity.map((item) => {
-              const Icon = item.icon;
+            {getTransactionHistory()
+              .slice(0, 3)
+              .map((item, index) => {
+                const balanceIn = isBalanceIn(item.type);
 
-              return (
-                <Link
-                  key={item.title}
-                  href="/transactions"
-                  className="flex items-center justify-between gap-3"
-                >
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="bg-muted flex size-10 shrink-0 items-center justify-center rounded-full">
-                      <Icon />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">
-                        {item.title}
-                      </p>
-                      <p className="text-muted-foreground text-xs">
-                        {item.meta}
-                      </p>
+                return (
+                  <Link
+                    key={index}
+                    href="/transactions"
+                    className="flex items-center justify-between gap-3"
+                  >
+                    <div className="flex min-w-0 items-center gap-3">
+                      <span className="bg-muted flex size-10 shrink-0 items-center justify-center rounded-full">
+                        {balanceIn ? <ArrowDownLeft /> : <ArrowUpRight />}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-medium">
+                          {item.type}
+                        </p>
+                        <p className="text-muted-foreground text-xs">
+                          {item.transactionTime}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <span className="shrink-0 text-sm font-semibold">
-                    {item.amount}
-                  </span>
-                </Link>
-              );
-            })}
+                    <span className="shrink-0 text-sm font-semibold">
+                      {item.amount}
+                    </span>
+                  </Link>
+                );
+              })}
           </CardContent>
           <CardFooter className="border-t">
             <Button asChild variant="outline" className="w-full">
