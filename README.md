@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# bKash Web
+
+This is a web application that replicates some of the core functionalities of the bKash mobile app. It is built with Next.js and Tailwind CSS.
 
 ## Getting Started
 
-First, run the development server:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
+
+You need to have [pnpm](https://pnpm.io/installation) installed on your machine.
+
+### Installing
+
+1.  Clone the repo
+2.  Install the dependencies:
+    ```bash
+    pnpm install
+    ```
+3.  Run the development server:
+    ```bash
+    pnpm dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project follows a standard Next.js App Router structure.
 
-## Learn More
+-   `src/app`: Contains all the routes and pages of the application.
+    -   `src/app/(auth)`: Contains the authentication pages (login, signup).
+    -   `src/app/(protected)`: Contains the protected pages that require authentication.
+-   `src/components`: Contains all the reusable components.
+-   `src/hooks`: Contains custom React hooks.
+-   `src/lib`: Contains utility functions and library configurations.
+-   `public`: Contains static assets.
 
-To learn more about Next.js, take a look at the following resources:
+## Available Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+In the project directory, you can run:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+-   `pnpm dev`: Runs the app in the development mode.
+-   `pnpm build`: Builds the app for production to the `out` folder.
+-   `pnpm start`: Starts a production server.
+-   `pnpm lint`: Runs the linter.
 
-## Deploy on Vercel
+## Technologies Used
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   [Next.js](https://nextjs.org/) - React framework for production
+-   [React](https://reactjs.org/) - A JavaScript library for building user interfaces
+-   [Tailwind CSS](https://tailwindcss.com/) - A utility-first CSS framework
+-   [TypeScript](https://www.typescriptlang.org/) - A typed superset of JavaScript
+-   [shadcn/ui](https://ui.shadcn.com/) - Re-usable components built using Radix UI and Tailwind CSS.
+-   [pnpm](https://pnpm.io/) - Fast, disk space efficient package manager
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Static Export
+
+This project is configured with `output: "export"` in `next.config.ts`. This means that `pnpm build` will generate a static export of the application in the `out` directory. This is ideal for deploying to static hosting services.
