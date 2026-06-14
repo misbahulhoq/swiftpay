@@ -25,11 +25,11 @@ export const paths = [
   { slug: "transactions" },
 ] as const;
 
-export const generateStaticParams = () => {
-  return paths;
-};
-
 export type Slug = (typeof paths)[number]["slug"];
+
+export const generateStaticParams = () => {
+  return paths.map((path) => ({ ...path }));
+};
 
 const Page = async ({ params }: { params: Promise<{ slug: Slug }> }) => {
   const { slug } = await params;
