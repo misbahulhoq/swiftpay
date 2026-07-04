@@ -6,9 +6,10 @@ type Transaction = {
 };
 
 const getTransactionHistory = () => {
-  return JSON.parse(
+  const transactionHistory = JSON.parse(
     localStorage.getItem("swiftpay_transactions") || "[]",
   ) as Transaction[];
+  return transactionHistory.reverse();
 };
 
 const updateTransactionHistory = (

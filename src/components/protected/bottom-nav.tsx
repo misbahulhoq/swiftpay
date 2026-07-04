@@ -4,7 +4,7 @@ import { Home, Clock3, QrCode, UserRound } from "lucide-react";
 
 const bottomNav = [
   { label: "Home", href: "/home", icon: Home },
-  { label: "History", href: "/transactions", icon: Clock3 },
+  { label: "Transactions", href: "/transactions", icon: Clock3 },
   { label: "Scan", href: "/scan", icon: QrCode },
   { label: "Profile", href: "/profile", icon: UserRound },
 ];
