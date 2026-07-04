@@ -33,7 +33,7 @@ const Statements = () => {
       {transactionHistory.length === 0 ? (
         <p>No transactions yet.</p>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 pb-16">
           {transactionHistory.map((transaction, index) => (
             <div
               key={index}

@@ -1,6 +1,11 @@
-import type { BalanceIn, BalanceOut } from "@/lib/transaction-types";
+import type {
+  BalanceIn,
+  BalanceOut,
+  TransactionType,
+} from "@/lib/transaction-types";
+
 type Transaction = {
-  type: string;
+  type: TransactionType;
   amount: number;
   transactionTime: string;
 };

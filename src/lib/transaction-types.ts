@@ -24,6 +24,19 @@ export const isBalanceOut = (value: string): value is BalanceOut => {
 
 export type TransactionType = BalanceIn | BalanceOut | "request";
 
+export const transactionLabels: Record<TransactionType, string> = {
+  "cash-in": "Add Money",
+  "cash-out": "Cash Out",
+  "bank-to-swiftpay": "Bank to Swiftpay",
+  "card-to-swiftpay": "Card to Swiftpay",
+  "swiftpay-to-bank": "Swiftpay to Bank",
+  "send-money": "Send Money",
+  "pay-bill": "Pay Bill",
+  "merchant-pay": "Merchant Pay",
+  recharge: "Recharge",
+  request: "Request Money",
+};
+
 export const transactions: {
   type: TransactionType;
   label: string;

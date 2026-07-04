@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/card";
 import { useBalance } from "@/hooks/use-balance";
 import { useTransactions } from "@/hooks/use-transactions";
-import { isBalanceIn } from "@/lib/transaction-types";
+import { isBalanceIn, transactionLabels } from "@/lib/transaction-types";
 
 type StoredUser = {
   name?: string;
@@ -220,6 +220,7 @@ const HomePage = () => {
               .slice(0, 3)
               .map((item, index) => {
                 const balanceIn = isBalanceIn(item.type);
+                const label = transactionLabels[item.type];
 
                 return (
                   <Link
@@ -232,9 +233,7 @@ const HomePage = () => {
                         {balanceIn ? <ArrowDownLeft /> : <ArrowUpRight />}
                       </span>
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-medium">
-                          {item.type}
-                        </p>
+                        <p className="truncate text-sm font-medium">{label}</p>
                         <p className="text-muted-foreground text-xs">
                           {item.transactionTime}
                         </p>
