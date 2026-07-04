@@ -28,12 +28,12 @@ const SendMoney = () => {
       toast.success("Money sent successfully", {
         position: "bottom-center",
       });
+      reset();
     } catch (_err) {
       toast.error((_err as Error).message || "Something went wrong", {
         position: "top-center",
       });
     } finally {
-      reset();
     }
   };
 

@@ -33,6 +33,10 @@ export const transactions: {
     type: "bank-to-swiftpay",
   },
   {
+    label: "Card to Swiftpay",
+    type: "card-to-swiftpay",
+  },
+  {
     label: "Swiftpay to Bank",
     type: "swiftpay-to-bank",
   },
