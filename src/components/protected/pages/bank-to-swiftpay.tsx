@@ -20,7 +20,7 @@ interface IForm {
   amount: number;
 }
 
-const BankToBkash = () => {
+const BankToSwiftpay = () => {
   const { balanceIn } = useTransactions();
   const [search, setSearch] = useState("");
   const [selectedBank, setSelectedBank] = useState<(typeof bankList)[0] | null>(
@@ -54,7 +54,7 @@ const BankToBkash = () => {
 
   const handleBalanceAdd = async (data: IForm) => {
     try {
-      balanceIn("bank-to-bkash", data.amount);
+      balanceIn("bank-to-swiftpay", data.amount);
       toast.success("Balance added successfully", { position: "top-center" });
     } catch (_err) {
       toast.error((_err as Error).message || "Something went wrong", {
@@ -175,4 +175,4 @@ const BankToBkash = () => {
   );
 };
 
-export default BankToBkash;
+export default BankToSwiftpay;

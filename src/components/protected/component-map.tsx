@@ -2,9 +2,9 @@ import { JSX } from "react";
 import { Slug } from "@/app/(protected)/[slug]/page";
 
 import AddMoney from "./pages/add-money";
-import BankToBkash from "./pages/bank-to-bkash";
+import BankToSwiftpay from "./pages/bank-to-swiftpay";
 import BillPay from "./pages/bill-pay";
-import BkashToBank from "./pages/bkash-to-bank";
+import SwiftpayToBank from "./pages/swiftpay-to-bank";
 import CashOut from "./pages/cash-out";
 import ElectricityBill from "./pages/electricity-bill";
 import LimitCharges from "./pages/limit-charges";
@@ -12,7 +12,7 @@ import MerchantPay from "./pages/merchant-pay";
 import MobileRecharge from "./pages/mobile-recharge";
 import NearbyAgents from "./pages/nearby-agents";
 import RequestMoney from "./pages/request-money";
-import SavedRecipients from "./pages/saved-recepients";
+import SavedRecipients from "./pages/saved-recipients";
 import SendMoney from "./pages/send-money";
 import Offers from "./pages/offers";
 import Profile from "./pages/profile";
@@ -21,15 +21,15 @@ import Security from "./pages/security";
 import Services from "./pages/services";
 import Statements from "./pages/statements";
 import Support from "./pages/support";
-import CardToBkash from "./pages/card-to-bkash";
+import CardToSwiftpay from "./pages/card-to-swiftpay";
 
 export const componentMap: Record<Slug, JSX.Element> = {
   "add-money": <AddMoney />,
-  "bank-to-bkash": <BankToBkash />,
+  "bank-to-swiftpay": <BankToSwiftpay />,
   "bill-pay": <BillPay />,
-  "bkash-to-bank": <BkashToBank />,
+  "swiftpay-to-bank": <SwiftpayToBank />,
   "cash-out": <CashOut />,
-  "card-to-bkash": <CardToBkash />,
+  "card-to-swiftpay": <CardToSwiftpay />,
   "electricity-bill": <ElectricityBill />,
   "limits-charges": <LimitCharges />,
   "merchant-pay": <MerchantPay />,

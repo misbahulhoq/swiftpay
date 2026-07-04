@@ -2,10 +2,10 @@ import { componentMap } from "@/components/protected/component-map";
 
 export const paths = [
   { slug: "add-money" },
-  { slug: "bank-to-bkash" },
-  { slug: "card-to-bkash" },
+  { slug: "bank-to-swiftpay" },
+  { slug: "card-to-swiftpay" },
   { slug: "bill-pay" },
-  { slug: "bkash-to-bank" },
+  { slug: "swiftpay-to-bank" },
   { slug: "cash-out" },
   { slug: "electricity-bill" },
   { slug: "limits-charges" },

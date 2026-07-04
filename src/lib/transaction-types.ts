@@ -1,9 +1,9 @@
-export const BalanceInValues = ["bank-to-bkash", "cash-in"] as const;
+export const BalanceInValues = ["bank-to-swiftpay", "cash-in"] as const;
 export type BalanceIn = (typeof BalanceInValues)[number];
 export const BalanceOutValues = [
   "cash-out",
-  "bkash-to-bank", // also known as transfer
-  "bank-to-bkash",
+  "swiftpay-to-bank", // also known as transfer
+  "bank-to-swiftpay",
   "send-money",
   "pay-bill",
   "merchant-pay",
@@ -26,12 +26,12 @@ export const transactions: {
   label: string;
 }[] = [
   {
-    label: "Bank to Bkash",
-    type: "bank-to-bkash",
+    label: "Bank to Swiftpay",
+    type: "bank-to-swiftpay",
   },
   {
-    label: "Bkash to Bank",
-    type: "bkash-to-bank",
+    label: "Swiftpay to Bank",
+    type: "swiftpay-to-bank",
   },
   {
     label: "Send Money",

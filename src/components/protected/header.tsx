@@ -25,8 +25,8 @@ const Header = () => {
         <h3 className="capitalize">{title}</h3>
 
         <Image
-          src="/bkash.webp"
-          alt="Bkash Logo"
+          src="/swiftpay.webp"
+          alt="Swiftpay Logo"
           width={24}
           height={24}
           className="rounded"

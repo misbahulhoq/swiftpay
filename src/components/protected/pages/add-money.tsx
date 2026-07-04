@@ -9,7 +9,7 @@ const AddMoney = () => {
     <div className="flex flex-col items-start space-y-4">
       <Button asChild variant="outline">
         <Link
-          href="/bank-to-bkash"
+          href="/bank-to-swiftpay"
           className="flex items-center gap-2 rounded border"
         >
           Bank to Swiftpay <ArrowRight size={16} />
@@ -17,7 +17,7 @@ const AddMoney = () => {
       </Button>
 
       <Button asChild variant="outline">
-        <Link href="/card-to-bkash" className="flex items-center gap-2">
+        <Link href="/card-to-swiftpay" className="flex items-center gap-2">
           Card to SwiftPay <ArrowRight size={16} />
         </Link>
       </Button>

@@ -53,13 +53,13 @@ const moneyActions = [
   { label: "Add Money", href: "/add-money", icon: CircleDollarSign },
   { label: "Pay Bill", href: "/bill-pay", icon: ReceiptText },
   { label: "Merchant Pay", href: "/merchant-pay", icon: ScanLine },
-  { label: "Transfer", href: "/bkash-to-bank", icon: Landmark },
+  { label: "Transfer", href: "/swiftpay-to-bank", icon: Landmark },
   { label: "Request", href: "/request-money", icon: ArrowDownLeft },
 ];
 
 const serviceLinks = [
   { label: "Electricity", href: "/electricity-bill", icon: Lightbulb },
-  { label: "Bank Link", href: "/bank-to-bkash", icon: Building2 },
+  { label: "Bank Link", href: "/bank-to-swiftpay", icon: Building2 },
   { label: "Offers", href: "/offers", icon: BadgePercent },
   { label: "Support", href: "/support", icon: Headphones },
 ];
