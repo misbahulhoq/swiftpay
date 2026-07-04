@@ -55,7 +55,9 @@ const BankToSwiftpay = () => {
   const handleBalanceAdd = async (data: IForm) => {
     try {
       balanceIn("bank-to-swiftpay", data.amount);
-      toast.success("Balance added successfully", { position: "top-center" });
+      toast.success("Balance added successfully", {
+        position: "bottom-center",
+      });
     } catch (_err) {
       toast.error((_err as Error).message || "Something went wrong", {
         position: "top-center",

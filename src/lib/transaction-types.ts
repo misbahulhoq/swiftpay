@@ -1,9 +1,12 @@
-export const BalanceInValues = ["bank-to-swiftpay", "cash-in"] as const;
+export const BalanceInValues = [
+  "bank-to-swiftpay",
+  "cash-in",
+  "card-to-swiftpay",
+] as const;
 export type BalanceIn = (typeof BalanceInValues)[number];
 export const BalanceOutValues = [
   "cash-out",
   "swiftpay-to-bank", // also known as transfer
-  "bank-to-swiftpay",
   "send-money",
   "pay-bill",
   "merchant-pay",
