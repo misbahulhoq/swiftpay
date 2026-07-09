@@ -25,7 +25,11 @@ const QrScanner = ({
   useEffect(() => {
     const html5QrCode = new Html5Qrcode("reader");
 
-    const qrCodeSuccessCallback = (decodedText: string, decodedResult: any) => {
+    const qrCodeSuccessCallback = (
+      decodedText: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      decodedResult: any,
+    ) => {
       if (decodedResult.result.format.formatName === "QR_CODE") {
         onSuccess();
       } else {
@@ -40,28 +44,52 @@ const QrScanner = ({
 
     const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-    html5QrCode
-      .start(
-        { facingMode: "environment" },
-        config,
-        qrCodeSuccessCallback,
-        () => {},
-      )
-      .catch((err) => {
-        toast.error("Failed to start camera. Please check permissions.", {
-          position: "top-center",
+    const startScanner = () => {
+      Html5Qrcode.getCameras()
+        .then((cameras) => {
+          if (cameras && cameras.length) {
+            html5QrCode
+              .start(
+                { facingMode: "environment" },
+                config,
+                qrCodeSuccessCallback,
+                () => {},
+              )
+              .catch((err) => {
+                console.log("Error starting scanner:", err);
+                toast.error("Unable to start the QR scanner.", {
+                  position: "top-center",
+                });
+                onCancel();
+              });
+          } else {
+            toast.error("No cameras found on this device.", {
+              position: "top-center",
+            });
+            onCancel();
+          }
+        })
+        .catch((err) => {
+          console.log("Camera permission error:", err);
+          toast.error(
+            "Camera permission is required. Please allow camera access in your browser settings.",
+            { position: "top-center", duration: 5000 },
+          );
+          onCancel();
         });
-        onCancel();
-      });
+    };
+
+    startScanner();
 
     return () => {
       const stopScanner = async () => {
         try {
           if (html5QrCode.isScanning) {
             await html5QrCode.stop();
+            console.log("QR Code scanning stopped.");
           }
         } catch (err) {
-          console.log("Scanner already stopped or failed to stop gracefully.");
+          console.error("Failed to stop scanner gracefully:", err);
         }
       };
       stopScanner();
@@ -69,8 +97,11 @@ const QrScanner = ({
   }, [onSuccess, onCancel]);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black bg-opacity-75">
-      <div id="reader" className="w-full max-w-sm rounded-lg bg-white p-4"></div>
+    <div className="bg-opacity-75 fixed inset-0 z-50 flex flex-col items-center justify-center bg-black">
+      <div
+        id="reader"
+        className="w-full max-w-sm rounded-lg bg-white p-4"
+      ></div>
       <Button onClick={onCancel} className="mt-4" variant="secondary">
         Cancel
       </Button>
@@ -125,10 +156,7 @@ const MerchantPay = () => {
   return (
     <div className="relative">
       {showScanner && (
-        <QrScanner
-          onSuccess={handleScanSuccess}
-          onCancel={handleScanCancel}
-        />
+        <QrScanner onSuccess={handleScanSuccess} onCancel={handleScanCancel} />
       )}
       <div className="absolute top-0 right-0">
         <Button
