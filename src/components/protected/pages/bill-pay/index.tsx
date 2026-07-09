@@ -20,7 +20,7 @@ const BillPay = () => {
           <Link
             href={option.href}
             key={option.name}
-            className="bg-white p-4 rounded-lg shadow cursor-pointer hover:bg-gray-50"
+            className="bg-background hover:bg-foreground/5 cursor-pointer rounded-lg p-4 shadow"
           >
             {option.name}
           </Link>

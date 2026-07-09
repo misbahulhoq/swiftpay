@@ -132,3 +132,7 @@
     cursor: pointer;
   }
 }
+
+.month-picker-only .rdp-days {
+  display: none;
+}
