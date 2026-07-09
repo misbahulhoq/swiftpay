@@ -54,7 +54,6 @@ const moneyActions = [
   { label: "Pay Bill", href: "/bill-pay", icon: ReceiptText },
   { label: "Merchant Pay", href: "/merchant-pay", icon: ScanLine },
   { label: "Transfer", href: "/swiftpay-to-bank", icon: Landmark },
-  { label: "Request", href: "/request-money", icon: ArrowDownLeft },
 ];
 
 const serviceLinks = [

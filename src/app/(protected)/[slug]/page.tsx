@@ -18,7 +18,6 @@ export const paths = [
   { slug: "nearby-agents" },
   { slug: "offers" },
   { slug: "profile" },
-  { slug: "request-money" },
   { slug: "saved-recipients" },
   { slug: "scan" },
   { slug: "security" },

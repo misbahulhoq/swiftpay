@@ -18,7 +18,6 @@ import LimitCharges from "./pages/limit-charges";
 import MerchantPay from "./pages/merchant-pay";
 import MobileRecharge from "./pages/mobile-recharge";
 import NearbyAgents from "./pages/nearby-agents";
-import RequestMoney from "./pages/request-money";
 import SavedRecipients from "./pages/saved-recipients";
 import SendMoney from "./pages/send-money";
 import Offers from "./pages/offers";
@@ -49,7 +48,6 @@ export const componentMap: Record<Slug, JSX.Element> = {
   "merchant-pay": <MerchantPay />,
   "mobile-recharge": <MobileRecharge />,
   "nearby-agents": <NearbyAgents />,
-  "request-money": <RequestMoney />,
   "saved-recipients": <SavedRecipients />,
   "send-money": <SendMoney />,
   offers: <Offers />,

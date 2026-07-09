@@ -1,5 +1,4 @@
 import {
-  ArrowDownLeft,
   BadgePercent,
   Banknote,
   Building2,
@@ -27,14 +26,12 @@ import {
   Wifi,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 
 const services = {
   "Money Transfer": [
     { slug: "send-money", label: "Send Money", icon: Send },
     { slug: "cash-out", label: "Cash Out", icon: Banknote },
     { slug: "add-money", label: "Add Money", icon: CircleDollarSign },
-    { slug: "request-money", label: "Request Money", icon: ArrowDownLeft },
     {
       slug: "bank-to-swiftpay",
       label: "Bank to SwiftPay",
@@ -104,7 +101,7 @@ const ServicesPage = () => {
     <div className="space-y-6">
       {Object.entries(services).map(([category, items]) => (
         <section key={category}>
-          <h2 className="text-lg font-semibold mb-3">{category}</h2>
+          <h2 className="mb-3 text-lg font-semibold">{category}</h2>
           <div className="grid grid-cols-4 gap-3">
             {items.map((item) => {
               const Icon = item.icon;
