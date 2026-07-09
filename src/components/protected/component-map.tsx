@@ -7,6 +7,13 @@ import BillPay from "./pages/bill-pay";
 import SwiftpayToBank from "./pages/swiftpay-to-bank";
 import CashOut from "./pages/cash-out";
 import ElectricityBill from "./pages/electricity-bill";
+import GasBill from "./pages/gas-bill";
+import WaterBill from "./pages/water-bill";
+import InternetBill from "./pages/internet-bill";
+import TelephoneBill from "./pages/telephone-bill";
+import TvBill from "./pages/tv-bill";
+import CreditCardBill from "./pages/credit-card-bill";
+import EducationFee from "./pages/education-fee";
 import LimitCharges from "./pages/limit-charges";
 import MerchantPay from "./pages/merchant-pay";
 import MobileRecharge from "./pages/mobile-recharge";
@@ -31,6 +38,13 @@ export const componentMap: Record<Slug, JSX.Element> = {
   "cash-out": <CashOut />,
   "card-to-swiftpay": <CardToSwiftpay />,
   "electricity-bill": <ElectricityBill />,
+  "gas-bill": <GasBill />,
+  "water-bill": <WaterBill />,
+  "internet-bill": <InternetBill />,
+  "telephone-bill": <TelephoneBill />,
+  "tv-bill": <TvBill />,
+  "credit-card-bill": <CreditCardBill />,
+  "education-fee": <EducationFee />,
   "limits-charges": <LimitCharges />,
   "merchant-pay": <MerchantPay />,
   "mobile-recharge": <MobileRecharge />,

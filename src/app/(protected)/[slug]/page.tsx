@@ -7,7 +7,11 @@ export const paths = [
   { slug: "bill-pay" },
   { slug: "swiftpay-to-bank" },
   { slug: "cash-out" },
+  { slug: "credit-card-bill" },
+  { slug: "education-fee" },
   { slug: "electricity-bill" },
+  { slug: "gas-bill" },
+  { slug: "internet-bill" },
   { slug: "limits-charges" },
   { slug: "merchant-pay" },
   { slug: "mobile-recharge" },
@@ -22,7 +26,10 @@ export const paths = [
   { slug: "services" },
   { slug: "statements" },
   { slug: "support" },
+  { slug: "telephone-bill" },
+  { slug: "tv-bill" },
   { slug: "transactions" },
+  { slug: "water-bill" },
 ] as const;
 
 export type Slug = (typeof paths)[number]["slug"];
