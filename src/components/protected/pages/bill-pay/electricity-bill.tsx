@@ -28,10 +28,16 @@ const PrepaidForm = () => {
   } = useForm<IPrepaidForm>();
   const { balanceOut } = useTransactions();
 
-  const handlePayment = (data: IPrepaidForm) => {
-    balanceOut("electricity-bill", data.amount);
-    toast.success("Prepaid bill paid successfully");
-    reset();
+  const handlePayment = async (data: IPrepaidForm) => {
+    try {
+      balanceOut("electricity-bill", data.amount);
+      toast.success("Prepaid bill paid successfully");
+      reset();
+    } catch (err) {
+      toast.error((err as Error).message || "Something went wrong", {
+        position: "top-center",
+      });
+    }
   };
 
   return (
