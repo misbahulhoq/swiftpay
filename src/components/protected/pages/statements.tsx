@@ -29,7 +29,7 @@ const Statements = () => {
 
   return (
     <div>
-      <h2 className="text-muted-foreground mb-3 text-lg">Statements</h2>
+      <h2 className="text-muted-foreground mb-3 text-lg">Transactions</h2>
       {transactionHistory.length === 0 ? (
         <p>No transactions yet.</p>
       ) : (

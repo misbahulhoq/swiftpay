@@ -4,13 +4,21 @@ export const BalanceInValues = [
   "card-to-swiftpay",
 ] as const;
 export type BalanceIn = (typeof BalanceInValues)[number];
+
 export const BalanceOutValues = [
   "cash-out",
   "swiftpay-to-bank", // also known as transfer
   "send-money",
-  "pay-bill",
   "merchant-pay",
   "recharge",
+  "electricity-bill",
+  "gas-bill",
+  "water-bill",
+  "internet-bill",
+  "telephone-bill",
+  "tv-bill",
+  "credit-card-bill",
+  "education-fee",
 ] as const;
 
 export type BalanceOut = (typeof BalanceOutValues)[number];
@@ -31,10 +39,17 @@ export const transactionLabels: Record<TransactionType, string> = {
   "card-to-swiftpay": "Card to Swiftpay",
   "swiftpay-to-bank": "Swiftpay to Bank",
   "send-money": "Send Money",
-  "pay-bill": "Pay Bill",
   "merchant-pay": "Merchant Pay",
   recharge: "Recharge",
   request: "Request Money",
+  "electricity-bill": "Electricity Bill",
+  "gas-bill": "Gas Bill",
+  "water-bill": "Water Bill",
+  "internet-bill": "Internet Bill",
+  "telephone-bill": "Telephone Bill",
+  "tv-bill": "TV Bill",
+  "credit-card-bill": "Credit Card Bill",
+  "education-fee": "Education Fee",
 };
 
 export const transactions: {
@@ -58,8 +73,36 @@ export const transactions: {
     type: "send-money",
   },
   {
-    label: "Pay Bill",
-    type: "pay-bill",
+    label: "Electricity Bill",
+    type: "electricity-bill",
+  },
+  {
+    label: "Gas Bill",
+    type: "gas-bill",
+  },
+  {
+    label: "Water Bill",
+    type: "water-bill",
+  },
+  {
+    label: "Internet Bill",
+    type: "internet-bill",
+  },
+  {
+    label: "Telephone Bill",
+    type: "telephone-bill",
+  },
+  {
+    label: "TV Bill",
+    type: "tv-bill",
+  },
+  {
+    label: "Credit Card Bill",
+    type: "credit-card-bill",
+  },
+  {
+    label: "Education Fee",
+    type: "education-fee",
   },
   {
     label: "Merchant Pay",
