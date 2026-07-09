@@ -15,7 +15,6 @@ import {
   Lightbulb,
   MapPin,
   MoreHorizontal,
-  QrCode,
   ReceiptText,
   ScanLine,
   Send,
@@ -54,6 +53,7 @@ const moneyActions = [
   { label: "Pay Bill", href: "/bill-pay", icon: ReceiptText },
   { label: "Merchant Pay", href: "/merchant-pay", icon: ScanLine },
   { label: "Transfer", href: "/swiftpay-to-bank", icon: Landmark },
+  { label: "Nearby Agents", href: "/nearby-agents", icon: MapPin },
 ];
 
 const serviceLinks = [
@@ -185,23 +185,6 @@ const HomePage = () => {
               );
             })}
           </div>
-        </section>
-
-        <section className="grid grid-cols-2 gap-3">
-          <Link
-            href="/scan"
-            className="bg-secondary text-secondary-foreground ring-foreground/5 hover:bg-muted flex min-h-28 flex-col justify-between rounded-2xl p-4 ring-1 transition-colors"
-          >
-            <QrCode />
-            <span className="text-sm font-semibold">Scan QR to pay</span>
-          </Link>
-          <Link
-            href="/nearby-agents"
-            className="bg-secondary text-secondary-foreground ring-foreground/5 hover:bg-muted flex min-h-28 flex-col justify-between rounded-2xl p-4 ring-1 transition-colors"
-          >
-            <MapPin />
-            <span className="text-sm font-semibold">Nearby agents</span>
-          </Link>
         </section>
 
         <Card>
