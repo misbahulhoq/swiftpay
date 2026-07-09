@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { QrCode } from "lucide-react";
@@ -9,6 +9,9 @@ import { Html5Qrcode } from "html5-qrcode";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTransactions } from "@/hooks/use-transactions";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import scannerSound from "./scanner-beep-sound.mp3";
 
 interface IForm {
   merchantNumber: string;
@@ -26,7 +29,7 @@ const QrScanner = ({
     const html5QrCode = new Html5Qrcode("reader");
 
     const qrCodeSuccessCallback = (
-      decodedText: string,
+      _decodedText: string,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       decodedResult: any,
     ) => {
@@ -112,6 +115,7 @@ const QrScanner = ({
 const MerchantPay = () => {
   const { balanceOut } = useTransactions();
   const [showScanner, setShowScanner] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(new Audio(scannerSound));
 
   const {
     register,
@@ -140,6 +144,7 @@ const MerchantPay = () => {
 
   const handleScanSuccess = () => {
     const hardcodedMerchantNumber = "01812345678";
+    audioRef.current.play();
     setValue("merchantNumber", hardcodedMerchantNumber, {
       shouldValidate: true,
     });
