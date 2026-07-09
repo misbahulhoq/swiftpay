@@ -11,12 +11,12 @@ import { MonthPicker } from "@/components/protected/month-picker";
 import { useTransactions } from "@/hooks/use-transactions";
 
 interface IForm {
-  subscriberId: string;
+  consumerNumber: string;
   amount: number;
   month: string;
 }
 
-const InternetBill = () => {
+const WaterBill = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const {
     register,
@@ -35,8 +35,8 @@ const InternetBill = () => {
 
   const handlePayment = async (data: IForm) => {
     try {
-      balanceOut("internet-bill", data.amount);
-      toast.success("Internet paid successfully");
+      balanceOut("water-bill", data.amount);
+      toast.success("Water bill paid successfully");
       reset();
       setDate(new Date());
     } catch (err) {
@@ -49,7 +49,7 @@ const InternetBill = () => {
   return (
     <div>
       <h2 className="text-muted-foreground mb-3 text-lg">
-        Enter subscriber ID, amount and month
+        Enter consumer number, amount and month
       </h2>
       <form
         onSubmit={handleSubmit(handlePayment)}
@@ -58,19 +58,19 @@ const InternetBill = () => {
         <div>
           <Input
             autoComplete="off"
-            placeholder="Subscriber ID"
+            placeholder="Consumer Number"
             className="h-11"
-            {...register("subscriberId", {
-              required: "Subscriber ID is required",
+            {...register("consumerNumber", {
+              required: "Consumer number is required",
               minLength: {
-                value: 4,
-                message: "Subscriber ID must be at least 4 characters",
+                value: 6,
+                message: "Consumer number must be at least 6 characters",
               },
             })}
           />
-          {errors.subscriberId && (
+          {errors.consumerNumber && (
             <span className="text-destructive text-xs">
-              {errors.subscriberId.message}
+              {errors.consumerNumber.message}
             </span>
           )}
         </div>
@@ -119,4 +119,4 @@ const InternetBill = () => {
   );
 };
 
-export default InternetBill;
+export default WaterBill;
