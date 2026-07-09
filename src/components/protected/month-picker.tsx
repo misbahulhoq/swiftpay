@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -25,8 +24,8 @@ export function MonthPicker({ date, setDate }: MonthPickerProps) {
         <Button
           variant={"outline"}
           className={cn(
-            "w-full justify-start text-left font-normal h-11",
-            !date && "text-muted-foreground"
+            "h-11 w-full justify-start text-left font-normal",
+            !date && "text-muted-foreground",
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
@@ -38,11 +37,9 @@ export function MonthPicker({ date, setDate }: MonthPickerProps) {
           mode="single"
           selected={date}
           onSelect={setDate}
-          captionLayout="dropdown-buttons"
-          fromYear={2020}
-          toYear={2030}
+          captionLayout="dropdown-months"
           className="month-picker-only"
-          initialFocus
+          autoFocus
         />
       </PopoverContent>
     </Popover>

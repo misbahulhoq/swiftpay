@@ -96,10 +96,16 @@ const PostpaidForm = () => {
   } = useForm<IPostpaidForm>();
   const { balanceOut } = useTransactions();
 
-  const handlePayment = (data: IPostpaidForm) => {
-    balanceOut("electricity-bill", data.amount);
-    toast.success("Postpaid bill paid successfully");
-    reset();
+  const handlePayment = async (data: IPostpaidForm) => {
+    try {
+      balanceOut("electricity-bill", data.amount);
+      toast.success("Postpaid bill paid successfully");
+      reset();
+    } catch (err) {
+      toast.error((err as Error).message || "Something went wrong", {
+        position: "top-center",
+      });
+    }
   };
 
   return (

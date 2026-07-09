@@ -7,7 +7,8 @@ import { format } from "date-fns";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { MonthPicker } from "@/components/ui/month-picker";
+import { MonthPicker } from "@/components/protected/month-picker";
+import { useTransactions } from "@/hooks/use-transactions";
 
 interface IForm {
   billingNumber: string;
@@ -24,6 +25,7 @@ const GasBill = () => {
     reset,
     setValue,
   } = useForm<IForm>();
+  const { balanceOut } = useTransactions();
 
   useEffect(() => {
     if (date) {
@@ -31,11 +33,17 @@ const GasBill = () => {
     }
   }, [date, setValue]);
 
-  const handlePayment = (data: IForm) => {
-    console.log(data);
-    toast.success("Gas bill paid successfully");
-    reset();
-    setDate(new Date());
+  const handlePayment = async (data: IForm) => {
+    try {
+      balanceOut("gas-bill", data.amount);
+      toast.success("Gas bill paid successfully");
+      reset();
+      setDate(new Date());
+    } catch (err) {
+      toast.error((err as Error).message || "Something went wrong", {
+        position: "top-center",
+      });
+    }
   };
 
   return (
