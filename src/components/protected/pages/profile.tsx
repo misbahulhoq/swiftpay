@@ -13,42 +13,27 @@ import { Label } from "@/components/ui/label";
 import { User } from "lucide-react";
 import { useProfile } from "@/hooks/use-profile";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
-const formSchema = z
-  .object({
-    name: z.string().min(2, {
-      message: "Name must be at least 2 characters.",
-    }),
-    currentPassword: z
-      .string()
-      .min(1, { message: "Current password is required." }),
-    newPassword: z
-      .string()
-      .min(5, { message: "New password must be at least 5 characters." }),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+type ProfileSchema = {
+  name: string;
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+};
 
 const Profile = () => {
   const profile = useProfile();
-  const { handleSubmit, formState, register, setError } = useForm<
-    z.infer<typeof formSchema>
-  >({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: profile?.name || "",
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
-  });
+  const { handleSubmit, formState, register, setError } =
+    useForm<ProfileSchema>({
+      defaultValues: {
+        name: profile?.name || "",
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      },
+    });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: ProfileSchema) => {
     console.log(values);
     if (values.currentPassword !== profile?.password) {
       setError("currentPassword", {
@@ -100,7 +85,15 @@ const Profile = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" {...register("name")} />
+              <Input
+                id="name"
+                {...register("name", {
+                  minLength: {
+                    value: 3,
+                    message: "Name must be at least 3 characters",
+                  },
+                })}
+              />
               {formState.errors.name && (
                 <p className="text-sm text-red-500">
                   {formState.errors.name.message}
@@ -112,7 +105,9 @@ const Profile = () => {
               <Input
                 id="current-password"
                 type="password"
-                {...register("currentPassword")}
+                {...register("currentPassword", {
+                  required: "Current password is required.",
+                })}
               />
               {formState.errors.currentPassword && (
                 <p className="text-sm text-red-500">
@@ -125,7 +120,21 @@ const Profile = () => {
               <Input
                 id="new-password"
                 type="password"
-                {...register("newPassword")}
+                {...register("newPassword", {
+                  required: "New password is required.",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Only numbers are allowed.",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "PIN must be 5 digits.",
+                  },
+                  maxLength: {
+                    value: 5,
+                    message: "PIN must be 5 digits.",
+                  },
+                })}
               />
               {formState.errors.newPassword && (
                 <p className="text-sm text-red-500">
@@ -138,7 +147,21 @@ const Profile = () => {
               <Input
                 id="confirm-password"
                 type="password"
-                {...register("confirmPassword")}
+                {...register("confirmPassword", {
+                  required: "Confirm password is required.",
+                  pattern: {
+                    value: /^[0-9]*$/,
+                    message: "Only numbers are allowed.",
+                  },
+                  minLength: {
+                    value: 5,
+                    message: "PIN must be 5 digits.",
+                  },
+                  maxLength: {
+                    value: 5,
+                    message: "PIN must be 5 digits.",
+                  },
+                })}
               />
               {formState.errors.confirmPassword && (
                 <p className="text-sm text-red-500">

@@ -9,6 +9,7 @@ import { Html5Qrcode } from "html5-qrcode";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTransactions } from "@/hooks/use-transactions";
+import { BASE_PATH } from "@/lib/constants";
 
 interface IForm {
   merchantNumber: string;
@@ -140,7 +141,7 @@ const MerchantPay = () => {
 
   const handleScanSuccess = () => {
     const hardcodedMerchantNumber = "01812345678";
-    new Audio("/beep.mp3").play();
+    new Audio(`${BASE_PATH}/beep.mp3`).play();
     setValue("merchantNumber", hardcodedMerchantNumber, {
       shouldValidate: true,
     });
