@@ -14,6 +14,13 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  turbopack: {
+    rules: {
+      "*.mp3": {
+        loaders: ["asset"],
+      },
+    },
+  },
 };
 
 export default nextConfig;
