@@ -36,7 +36,9 @@ const formSchema = z
 
 const Profile = () => {
   const profile = useProfile();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const { handleSubmit, formState, register, setError } = useForm<
+    z.infer<typeof formSchema>
+  >({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: profile?.name || "",
@@ -48,8 +50,24 @@ const Profile = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
-    // Here you would typically handle the form submission,
-    // like calling an API to update the profile.
+    if (values.currentPassword !== profile?.password) {
+      setError("currentPassword", {
+        message: "Current password is incorrect.",
+      });
+      return;
+    }
+    if (values.newPassword !== values.confirmPassword) {
+      setError("confirmPassword", {
+        message: "Passwords don't match",
+      });
+      return;
+    }
+    if (values.newPassword === values.currentPassword) {
+      setError("newPassword", {
+        message: "New password must be different from the current password.",
+      });
+      return;
+    }
   };
 
   return (
@@ -70,7 +88,7 @@ const Profile = () => {
           <CardDescription>Make sure to use a strong password.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number</Label>
               <Input
@@ -82,10 +100,10 @@ const Profile = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" {...form.register("name")} />
-              {form.formState.errors.name && (
+              <Input id="name" {...register("name")} />
+              {formState.errors.name && (
                 <p className="text-sm text-red-500">
-                  {form.formState.errors.name.message}
+                  {formState.errors.name.message}
                 </p>
               )}
             </div>
@@ -94,11 +112,11 @@ const Profile = () => {
               <Input
                 id="current-password"
                 type="password"
-                {...form.register("currentPassword")}
+                {...register("currentPassword")}
               />
-              {form.formState.errors.currentPassword && (
+              {formState.errors.currentPassword && (
                 <p className="text-sm text-red-500">
-                  {form.formState.errors.currentPassword.message}
+                  {formState.errors.currentPassword.message}
                 </p>
               )}
             </div>
@@ -107,11 +125,11 @@ const Profile = () => {
               <Input
                 id="new-password"
                 type="password"
-                {...form.register("newPassword")}
+                {...register("newPassword")}
               />
-              {form.formState.errors.newPassword && (
+              {formState.errors.newPassword && (
                 <p className="text-sm text-red-500">
-                  {form.formState.errors.newPassword.message}
+                  {formState.errors.newPassword.message}
                 </p>
               )}
             </div>
@@ -120,11 +138,11 @@ const Profile = () => {
               <Input
                 id="confirm-password"
                 type="password"
-                {...form.register("confirmPassword")}
+                {...register("confirmPassword")}
               />
-              {form.formState.errors.confirmPassword && (
+              {formState.errors.confirmPassword && (
                 <p className="text-sm text-red-500">
-                  {form.formState.errors.confirmPassword.message}
+                  {formState.errors.confirmPassword.message}
                 </p>
               )}
             </div>
