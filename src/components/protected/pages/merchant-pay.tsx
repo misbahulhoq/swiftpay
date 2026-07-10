@@ -9,9 +9,6 @@ import { Html5Qrcode } from "html5-qrcode";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTransactions } from "@/hooks/use-transactions";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// import scannerSound from "./scanner-beep-sound.mp3";
 
 interface IForm {
   merchantNumber: string;

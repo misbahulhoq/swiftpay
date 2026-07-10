@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { BASE_PATH } from "@/lib/constants";
 
 const Header = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const Header = () => {
         <h3 className="capitalize">{title}</h3>
 
         <Image
-          src="/swiftpay.webp"
+          src={`${BASE_PATH}/swiftpay.webp`}
           alt="Swiftpay Logo"
           width={24}
           height={24}
