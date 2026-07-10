@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Shield, KeyRound, Fingerprint, LogOut } from "lucide-react";
+import Link from "next/link";
 
 const Security = () => {
   return (
@@ -39,7 +40,9 @@ const Security = () => {
           </p>
         </CardContent>
         <CardFooter>
-          <Button>Change PIN</Button>
+          <Button asChild>
+            <Link href="/profile">Change PIN</Link>
+          </Button>
         </CardFooter>
       </Card>
 
