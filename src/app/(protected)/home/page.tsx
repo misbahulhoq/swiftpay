@@ -228,14 +228,6 @@ const HomePage = () => {
                 );
               })}
           </CardContent>
-          <CardFooter className="border-t">
-            <Button asChild variant="outline" className="w-full">
-              <Link href="/saved-recipients">
-                <UserRound data-icon="inline-start" />
-                Manage saved recipients
-              </Link>
-            </Button>
-          </CardFooter>
         </Card>
 
         <section className="flex flex-col gap-3">
