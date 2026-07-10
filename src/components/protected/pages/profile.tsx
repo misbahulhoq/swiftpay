@@ -1,5 +1,7 @@
 "use client";
 
+import { useForm } from "react-hook-form";
+import { LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,20 +12,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User } from "lucide-react";
-import { useProfile } from "@/hooks/use-profile";
-import { useForm } from "react-hook-form";
+import { updateProfile, useProfile } from "@/hooks/use-profile";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type ProfileSchema = {
-  name: string;
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  name?: string;
+  currentPassword?: string;
+  newPassword?: string;
+  confirmPassword?: string;
 };
 
 const Profile = () => {
+  const router = useRouter();
   const profile = useProfile();
-  const { handleSubmit, formState, register, setError } =
+  const { handleSubmit, formState, register, setError, watch } =
     useForm<ProfileSchema>({
       defaultValues: {
         name: profile?.name || "",
@@ -33,26 +36,45 @@ const Profile = () => {
       },
     });
 
+  const infoChanged =
+    watch("name") !== profile?.name || watch("currentPassword") !== "";
+
   const onSubmit = (values: ProfileSchema) => {
     console.log(values);
-    if (values.currentPassword !== profile?.password) {
-      setError("currentPassword", {
-        message: "Current password is incorrect.",
-      });
-      return;
+    const isChangingPassword =
+      values.currentPassword ||
+      values.currentPassword ||
+      values.confirmPassword;
+
+    if (isChangingPassword) {
+      if (values.currentPassword !== profile?.password) {
+        setError("currentPassword", {
+          message: "Current password is incorrect.",
+        });
+        return;
+      }
+      if (values.newPassword !== values.confirmPassword) {
+        setError("confirmPassword", {
+          message: "Passwords don't match",
+        });
+        return;
+      }
+      if (values.newPassword === values.currentPassword) {
+        setError("newPassword", {
+          message: "New password must be different from the current password.",
+        });
+        return;
+      }
+      updateProfile(values);
+    } else {
+      updateProfile({ name: values.name });
     }
-    if (values.newPassword !== values.confirmPassword) {
-      setError("confirmPassword", {
-        message: "Passwords don't match",
-      });
-      return;
-    }
-    if (values.newPassword === values.currentPassword) {
-      setError("newPassword", {
-        message: "New password must be different from the current password.",
-      });
-      return;
-    }
+    toast.success("Profile updated successfully", { position: "top-center" });
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("swiftpay_user");
+    router.push("/login");
   };
 
   return (
@@ -105,9 +127,7 @@ const Profile = () => {
               <Input
                 id="current-password"
                 type="password"
-                {...register("currentPassword", {
-                  required: "Current password is required.",
-                })}
+                {...register("currentPassword")}
               />
               {formState.errors.currentPassword && (
                 <p className="text-sm text-red-500">
@@ -121,7 +141,6 @@ const Profile = () => {
                 id="new-password"
                 type="password"
                 {...register("newPassword", {
-                  required: "New password is required.",
                   pattern: {
                     value: /^[0-9]*$/,
                     message: "Only numbers are allowed.",
@@ -148,7 +167,6 @@ const Profile = () => {
                 id="confirm-password"
                 type="password"
                 {...register("confirmPassword", {
-                  required: "Confirm password is required.",
                   pattern: {
                     value: /^[0-9]*$/,
                     message: "Only numbers are allowed.",
@@ -169,10 +187,17 @@ const Profile = () => {
                 </p>
               )}
             </div>
-            <Button type="submit">Update Profile</Button>
+            <Button type="submit" disabled={!infoChanged}>
+              Update Profile
+            </Button>
           </form>
         </CardContent>
       </Card>
+
+      <Button variant="destructive" className="" onClick={handleLogout}>
+        <LogOut />
+        Logout
+      </Button>
     </div>
   );
 };
